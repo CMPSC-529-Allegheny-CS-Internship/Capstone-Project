@@ -1,0 +1,32 @@
+import 'dart:async';
+import 'node_repository.dart';
+import 'cluster_node_response.dart';
+import 'api_response.dart';
+
+
+class NodeBloc {
+  NodeRepository _nodeRepository;
+StreamController _nodeListController;
+StreamSink<ApiResponse<List<Node>>> get nodeListSink =>
+      _nodeListController.sink;
+Stream<ApiResponse<List<Node>>> get nodeListStream =>
+      _nodeListController.stream;
+NodeBloc() {
+    _nodeListController = StreamController<ApiResponse<List<Node>>>();
+    _nodeRepository = nodeRepository();
+    fetchNodeList();
+  }
+fetchNodeList() async {
+    nodeListSink.add(ApiResponse.loading('Fetching Nodes'));
+    try {
+      List<Node> nodes = await _nodeRepository.fetchNodeList();
+      nodeListSink.add(ApiResponse.completed(nodes));
+    } catch (e) {
+      nodeListSink.add(ApiResponse.error(e.toString()));
+      print(e);
+    }
+  }
+dispose() {
+    _nodeListController?.close();
+  }
+}
