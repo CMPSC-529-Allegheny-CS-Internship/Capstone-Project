@@ -131,7 +131,7 @@ class _Node2WidgetState extends State<Node2Widget> {
             children: [
               Container(
                 width: 300,
-                height: 100,
+                height: 125,
                 decoration: BoxDecoration(
                   color: Color(0x00FFFBFB),
                 ),
