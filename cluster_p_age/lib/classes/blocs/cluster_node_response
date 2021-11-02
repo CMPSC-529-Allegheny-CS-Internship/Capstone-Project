@@ -1,0 +1,41 @@
+
+
+class cluster_Response {
+
+  ClusterResponse({this.name, this.version, this.uuid});
+
+  ClusterResponse.fromJson(Map<String, dynamic> json) {
+    name = json['name'];
+    version = json['version'];
+    uuid = json['uuid'];
+    }
+
+
+}
+
+class node_Response {
+
+
+  NodeResponse({this.name, this.version, this.uuid});
+
+  NodeResponse.fromJson(Map<String, dynamic> json) {
+    name = json['name'];
+    version = json['version'];
+    uuid = json['uuid']
+  }
+}
+
+
+class Cluster{
+String name;
+String version;
+int uuid;
+
+}
+
+class Node{
+String name;
+String version;
+int uuid;
+
+}

@@ -1,0 +1,14 @@
+import 'api_base_helper.dart';
+import 'cluster_node_response.dart';
+
+
+
+class MovieRepository {
+  final String _apiKey = apiKey;
+ApiBaseHelper _helper = ApiBaseHelper();
+Future<List<Cluster>> fetchClusterList() async {
+  //make sure to put the apiKey into the get later
+    final response = await _helper.get("cluster");
+    return ClusterResponse.fromJson(response).results;
+  }
+}
