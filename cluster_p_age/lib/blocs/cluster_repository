@@ -1,14 +1,14 @@
-import 'api_base_helper.dart';
-import 'cluster_node_response.dart';
+import 'api_base_helper';
+import 'response';
 
 
 
 class ClusterRepository {
-  final String _apiKey = apiKey;
+  // final String _apiKey = apiKey;
 ApiBaseHelper _helper = ApiBaseHelper();
 Future<List<Cluster>> fetchClusterList() async {
   //make sure to put the apiKey into the get later
     final response = await _helper.get("cluster");
-    return ClusterResponse.fromJson(response).results;
+    return cluster_Response.fromJson(response).results;
   }
 }

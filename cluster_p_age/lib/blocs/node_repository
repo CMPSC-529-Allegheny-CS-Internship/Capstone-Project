@@ -1,0 +1,15 @@
+import 'api_base_helper';
+import 'response';
+
+
+
+class NodeRepository {
+  // final String _apiKey = apiKey;
+ApiBaseHelper _helper = ApiBaseHelper();
+Future<List<Node>> fetchNodeList() async {
+  // make sure to put the apiKey into the get later
+  // change "node to cluster/node for real API call"
+    final response = await _helper.get("node");
+    return node_Response.fromJson(response).results;
+  }
+}

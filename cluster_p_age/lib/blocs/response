@@ -1,0 +1,54 @@
+
+
+class cluster_Response {
+  List<Cluster> results;
+
+
+  cluster_Response.fromJson(Map<String, dynamic> json) {
+    if (json['results'] != null) {
+      results = new List<Cluster>();
+      json['results'].forEach((v) {
+        results.add(new Cluster.fromJson(v));
+      });
+    }
+  }
+}
+
+class node_Response {
+  List<Node> results;
+
+
+  node_Response.fromJson(Map<String, dynamic> json) {
+if (json['results'] != null) {
+      results = new List<Node>();
+      json['results'].forEach((v) {
+        results.add(new Node.fromJson(v));
+      });
+    }
+  }
+}
+
+
+class Cluster{
+  String name;
+  String version;
+  int uuid;
+
+  Cluster.fromJson(Map<String, dynamic> json) {
+    name = json['name'];
+    version = json['version'];
+    uuid = json['uuid'];
+  }
+
+}
+
+class Node{
+String name;
+String status;
+
+Node.fromJson(Map<String, dynamic> json) {
+    name = json['name'];
+    status = json['version'];
+  }
+
+}

@@ -1,7 +1,7 @@
 import 'dart:async';
-import 'cluster_repository.dart';
-import 'cluster_node_response.dart';
-import 'api_response.dart';
+import 'cluster_repository';
+import 'response';
+import 'api_response';
 
 
 class ClusterBloc {
@@ -13,11 +13,9 @@ Stream<ApiResponse<List<Cluster>>> get clusterListStream =>
       _clusterListController.stream;
 ClusterBloc() {
     _clusterListController = StreamController<ApiResponse<List<Cluster>>>();
-    _clusterRepository = clusterRepository();
     fetchClusterList();
   }
 fetchClusterList() async {
-    clusterListSink.add(ApiResponse.loading('Fetching Clusters'));
     try {
       List<Cluster> clusters = await _clusterRepository.fetchClusterList();
       clusterListSink.add(ApiResponse.completed(clusters));

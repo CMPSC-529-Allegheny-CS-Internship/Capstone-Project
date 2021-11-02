@@ -1,0 +1,21 @@
+import 'dart:io';
+import 'package:http/http.dart' as http;
+import 'dart:convert';
+import 'dart:async';
+import 'dart:core';
+
+
+
+class ApiBaseHelper {
+  final String _baseUrl = "https://6181639432c9e200178047d7.mockapi.io/";
+
+  Future<dynamic> get(String url) async {
+    print('Api Get, url $url');
+    var responseJson;
+      final response = await http.get(_baseUrl + url);
+      responseJson = _returnResponse(response);
+    print('api get recieved!');
+    return responseJson;
+  }
+}
+

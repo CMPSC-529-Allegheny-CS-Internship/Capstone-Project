@@ -1,7 +1,7 @@
 import 'dart:async';
-import 'node_repository.dart';
-import 'cluster_node_response.dart';
-import 'api_response.dart';
+import 'node_repository';
+import 'response';
+import 'api_response';
 
 
 class NodeBloc {
@@ -13,11 +13,9 @@ Stream<ApiResponse<List<Node>>> get nodeListStream =>
       _nodeListController.stream;
 NodeBloc() {
     _nodeListController = StreamController<ApiResponse<List<Node>>>();
-    _nodeRepository = nodeRepository();
     fetchNodeList();
   }
 fetchNodeList() async {
-    nodeListSink.add(ApiResponse.loading('Fetching Nodes'));
     try {
       List<Node> nodes = await _nodeRepository.fetchNodeList();
       nodeListSink.add(ApiResponse.completed(nodes));
