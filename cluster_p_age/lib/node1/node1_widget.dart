@@ -46,7 +46,7 @@ class _Node1WidgetState extends State<Node1Widget> {
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 Padding(
-                  padding: EdgeInsetsDirectional.fromSTEB(0, 0, 0, 20),
+                  padding: EdgeInsetsDirectional.fromSTEB(0, 100, 0, 20),
                   child: FFButtonWidget(
                     onPressed: () {
                       print('Button pressed ...');
