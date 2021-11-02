@@ -6,16 +6,16 @@ import 'api_response';
 
 class ClusterBloc {
   ClusterRepository _clusterRepository;
-StreamController _clusterListController;
-StreamSink<ApiResponse<List<Cluster>>> get clusterListSink =>
+  StreamController _clusterListController;
+  StreamSink<ApiResponse<List<Cluster>>> get clusterListSink =>
       _clusterListController.sink;
-Stream<ApiResponse<List<Cluster>>> get clusterListStream =>
+  Stream<ApiResponse<List<Cluster>>> get clusterListStream =>
       _clusterListController.stream;
-ClusterBloc() {
+  ClusterBloc() {
     _clusterListController = StreamController<ApiResponse<List<Cluster>>>();
     fetchClusterList();
   }
-fetchClusterList() async {
+  fetchClusterList() async {
     try {
       List<Cluster> clusters = await _clusterRepository.fetchClusterList();
       clusterListSink.add(ApiResponse.completed(clusters));
@@ -24,7 +24,7 @@ fetchClusterList() async {
       print(e);
     }
   }
-dispose() {
-    _clusterListController?.close();
+  dispose() {
+      _clusterListController?.close();
   }
 }
