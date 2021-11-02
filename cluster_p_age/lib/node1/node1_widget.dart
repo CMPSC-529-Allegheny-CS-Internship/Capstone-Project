@@ -46,7 +46,7 @@ class _Node1WidgetState extends State<Node1Widget> {
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 Padding(
-                  padding: EdgeInsetsDirectional.fromSTEB(0, 0, 0, 20),
+                  padding: EdgeInsetsDirectional.fromSTEB(0, 100, 0, 20),
                   child: FFButtonWidget(
                     onPressed: () {
                       print('Button pressed ...');
@@ -131,7 +131,7 @@ class _Node1WidgetState extends State<Node1Widget> {
             children: [
               Container(
                 width: 300,
-                height: 100,
+                height: 125,
                 decoration: BoxDecoration(
                   color: Color(0x00FFFBFB),
                 ),

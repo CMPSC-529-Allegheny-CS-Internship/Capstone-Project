@@ -55,7 +55,7 @@ class _HomePageWidgetState extends State<HomePageWidget> {
                 alignment: AlignmentDirectional(0.05, -0.6),
                 child: Container(
                   width: 300,
-                  height: 150,
+                  height: 200,
                   decoration: BoxDecoration(
                     color: Color(0xFFEEEEEE),
                   ),
