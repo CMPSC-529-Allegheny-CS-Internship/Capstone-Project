@@ -24,12 +24,15 @@ class MyApp extends StatefulWidget {
 class _MyAppState extends State<MyApp> {
   Stream<ClusterPageFirebaseUser> userStream;
   ClusterPageFirebaseUser initialUser;
+  bool displaySplashImage = true;
 
   @override
   void initState() {
     super.initState();
     userStream = clusterPageFirebaseUserStream()
       ..listen((user) => initialUser ?? setState(() => initialUser = user));
+    Future.delayed(
+        Duration(seconds: 1), () => setState(() => displaySplashImage = false));
   }
 
   @override
@@ -43,7 +46,7 @@ class _MyAppState extends State<MyApp> {
       ],
       supportedLocales: const [Locale('en', '')],
       theme: ThemeData(primarySwatch: Colors.blue),
-      home: initialUser == null
+      home: initialUser == null || displaySplashImage
           ? const Center(
               child: SizedBox(
                 width: 50,

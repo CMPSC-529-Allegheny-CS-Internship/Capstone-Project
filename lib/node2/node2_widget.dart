@@ -13,15 +13,12 @@ class Node2Widget extends StatefulWidget {
 }
 
 class _Node2WidgetState extends State<Node2Widget> {
-  bool _loadingButton1 = false;
-  bool _loadingButton2 = false;
-  bool _loadingButton3 = false;
   final scaffoldKey = GlobalKey<ScaffoldState>();
 
   @override
   Widget build(BuildContext context) {
-    return FutureBuilder<dynamic>(
-      future: getNodeCall(),
+    return FutureBuilder<ApiCallResponse>(
+      future: getNodeTwoCall(),
       builder: (context, snapshot) {
         // Customize what your widget looks like when it's loading.
         if (!snapshot.hasData) {
@@ -35,7 +32,7 @@ class _Node2WidgetState extends State<Node2Widget> {
             ),
           );
         }
-        final node2GetNodeResponse = snapshot.data;
+        final node2GetNodeTwoResponse = snapshot.data;
         return Scaffold(
           key: scaffoldKey,
           appBar: AppBar(
@@ -89,7 +86,6 @@ class _Node2WidgetState extends State<Node2Widget> {
                         ),
                         borderRadius: 12,
                       ),
-                      loading: _loadingButton1,
                     ),
                     Padding(
                       padding: EdgeInsetsDirectional.fromSTEB(0, 5, 0, 0),
@@ -113,7 +109,6 @@ class _Node2WidgetState extends State<Node2Widget> {
                           ),
                           borderRadius: 12,
                         ),
-                        loading: _loadingButton2,
                       ),
                     ),
                     Padding(
@@ -138,7 +133,6 @@ class _Node2WidgetState extends State<Node2Widget> {
                           ),
                           borderRadius: 12,
                         ),
-                        loading: _loadingButton3,
                       ),
                     )
                   ],
@@ -149,8 +143,8 @@ class _Node2WidgetState extends State<Node2Widget> {
           body: SafeArea(
             child: Align(
               alignment: AlignmentDirectional(0, 0),
-              child: FutureBuilder<dynamic>(
-                future: getNodetwoCall(),
+              child: FutureBuilder<ApiCallResponse>(
+                future: getNodeTwoCall(),
                 builder: (context, snapshot) {
                   // Customize what your widget looks like when it's loading.
                   if (!snapshot.hasData) {
@@ -164,7 +158,7 @@ class _Node2WidgetState extends State<Node2Widget> {
                       ),
                     );
                   }
-                  final columnGetNodetwoResponse = snapshot.data;
+                  final columnGetNodeTwoResponse = snapshot.data;
                   return Column(
                     mainAxisSize: MainAxisSize.max,
                     mainAxisAlignment: MainAxisAlignment.start,
@@ -182,7 +176,7 @@ class _Node2WidgetState extends State<Node2Widget> {
                               padding:
                                   EdgeInsetsDirectional.fromSTEB(0, 20, 0, 0),
                               child: Text(
-                                getJsonField(columnGetNodetwoResponse,
+                                getJsonField(columnGetNodeTwoResponse.jsonBody,
                                         r'''$..name''')
                                     .toString(),
                                 textAlign: TextAlign.center,

@@ -14,13 +14,12 @@ class Node3Widget extends StatefulWidget {
 }
 
 class _Node3WidgetState extends State<Node3Widget> {
-  bool _loadingButton = false;
   final scaffoldKey = GlobalKey<ScaffoldState>();
 
   @override
   Widget build(BuildContext context) {
-    return FutureBuilder<dynamic>(
-      future: getNodeCall(),
+    return FutureBuilder<ApiCallResponse>(
+      future: getNodeThreeCall(),
       builder: (context, snapshot) {
         // Customize what your widget looks like when it's loading.
         if (!snapshot.hasData) {
@@ -34,7 +33,7 @@ class _Node3WidgetState extends State<Node3Widget> {
             ),
           );
         }
-        final node3GetNodeResponse = snapshot.data;
+        final node3GetNodeThreeResponse = snapshot.data;
         return Scaffold(
           key: scaffoldKey,
           appBar: AppBar(
@@ -93,7 +92,6 @@ class _Node3WidgetState extends State<Node3Widget> {
                         ),
                         borderRadius: 12,
                       ),
-                      loading: _loadingButton,
                     ),
                   )
                 ],
@@ -103,8 +101,8 @@ class _Node3WidgetState extends State<Node3Widget> {
           body: SafeArea(
             child: Align(
               alignment: AlignmentDirectional(0, 0),
-              child: FutureBuilder<dynamic>(
-                future: getNodetwoCall(),
+              child: FutureBuilder<ApiCallResponse>(
+                future: getClusterCall(),
                 builder: (context, snapshot) {
                   // Customize what your widget looks like when it's loading.
                   if (!snapshot.hasData) {
@@ -118,7 +116,7 @@ class _Node3WidgetState extends State<Node3Widget> {
                       ),
                     );
                   }
-                  final columnGetNodetwoResponse = snapshot.data;
+                  final columnGetClusterResponse = snapshot.data;
                   return Column(
                     mainAxisSize: MainAxisSize.max,
                     mainAxisAlignment: MainAxisAlignment.start,

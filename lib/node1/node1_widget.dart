@@ -13,15 +13,12 @@ class Node1Widget extends StatefulWidget {
 }
 
 class _Node1WidgetState extends State<Node1Widget> {
-  bool _loadingButton1 = false;
-  bool _loadingButton2 = false;
-  bool _loadingButton3 = false;
   final scaffoldKey = GlobalKey<ScaffoldState>();
 
   @override
   Widget build(BuildContext context) {
-    return FutureBuilder<dynamic>(
-      future: getNodeCall(),
+    return FutureBuilder<ApiCallResponse>(
+      future: getNodeOneCall(),
       builder: (context, snapshot) {
         // Customize what your widget looks like when it's loading.
         if (!snapshot.hasData) {
@@ -35,7 +32,7 @@ class _Node1WidgetState extends State<Node1Widget> {
             ),
           );
         }
-        final node1GetNodeResponse = snapshot.data;
+        final node1GetNodeOneResponse = snapshot.data;
         return Scaffold(
           key: scaffoldKey,
           appBar: AppBar(
@@ -89,35 +86,29 @@ class _Node1WidgetState extends State<Node1Widget> {
                         ),
                         borderRadius: 12,
                       ),
-                      loading: _loadingButton1,
                     ),
                     Padding(
                       padding: EdgeInsetsDirectional.fromSTEB(0, 5, 0, 0),
                       child: FFButtonWidget(
                         onPressed: () async {
-                          setState(() => _loadingButton2 = true);
-                          try {
-                            await showDialog(
-                              context: context,
-                              builder: (alertDialogContext) {
-                                return AlertDialog(
-                                  title: Text('Node Reboot'),
-                                  content: Text(
-                                      'Please wait while the node reboots...'),
-                                  actions: [
-                                    TextButton(
-                                      onPressed: () =>
-                                          Navigator.pop(alertDialogContext),
-                                      child: Text('Cancel'),
-                                    ),
-                                  ],
-                                );
-                              },
-                            );
-                            await getNodeCall();
-                          } finally {
-                            setState(() => _loadingButton2 = false);
-                          }
+                          await showDialog(
+                            context: context,
+                            builder: (alertDialogContext) {
+                              return AlertDialog(
+                                title: Text('Node Reboot'),
+                                content: Text(
+                                    'Please wait while the node reboots...'),
+                                actions: [
+                                  TextButton(
+                                    onPressed: () =>
+                                        Navigator.pop(alertDialogContext),
+                                    child: Text('Cancel'),
+                                  ),
+                                ],
+                              );
+                            },
+                          );
+                          await getNodeOneCall();
                         },
                         text: 'Reboot',
                         options: FFButtonOptions(
@@ -135,7 +126,6 @@ class _Node1WidgetState extends State<Node1Widget> {
                           ),
                           borderRadius: 12,
                         ),
-                        loading: _loadingButton2,
                       ),
                     ),
                     Padding(
@@ -160,7 +150,6 @@ class _Node1WidgetState extends State<Node1Widget> {
                           ),
                           borderRadius: 12,
                         ),
-                        loading: _loadingButton3,
                       ),
                     )
                   ],
@@ -171,129 +160,110 @@ class _Node1WidgetState extends State<Node1Widget> {
           body: SafeArea(
             child: Align(
               alignment: AlignmentDirectional(0, 0),
-              child: FutureBuilder<dynamic>(
-                future: getNodeCall(),
-                builder: (context, snapshot) {
-                  // Customize what your widget looks like when it's loading.
-                  if (!snapshot.hasData) {
-                    return Center(
-                      child: SizedBox(
-                        width: 50,
-                        height: 50,
-                        child: CircularProgressIndicator(
-                          color: FlutterFlowTheme.primaryColor,
+              child: Column(
+                mainAxisSize: MainAxisSize.max,
+                mainAxisAlignment: MainAxisAlignment.start,
+                children: [
+                  Container(
+                    width: 300,
+                    height: 125,
+                    decoration: BoxDecoration(
+                      color: Color(0x00FFFBFB),
+                    ),
+                    child: Column(
+                      mainAxisSize: MainAxisSize.max,
+                      children: [
+                        Padding(
+                          padding: EdgeInsetsDirectional.fromSTEB(0, 20, 0, 0),
+                          child: Text(
+                            getJsonField(node1GetNodeOneResponse.jsonBody,
+                                    r'''$..name''')
+                                .toString(),
+                            textAlign: TextAlign.center,
+                            style: FlutterFlowTheme.bodyText1.override(
+                              fontFamily: 'Roboto',
+                              fontSize: 30,
+                            ),
+                          ),
                         ),
-                      ),
-                    );
-                  }
-                  final columnGetNodeResponse = snapshot.data;
-                  return Column(
-                    mainAxisSize: MainAxisSize.max,
-                    mainAxisAlignment: MainAxisAlignment.start,
-                    children: [
-                      Container(
-                        width: 300,
-                        height: 125,
-                        decoration: BoxDecoration(
-                          color: Color(0x00FFFBFB),
-                        ),
-                        child: Column(
-                          mainAxisSize: MainAxisSize.max,
-                          children: [
-                            Padding(
-                              padding:
-                                  EdgeInsetsDirectional.fromSTEB(0, 20, 0, 0),
-                              child: Text(
-                                getJsonField(
-                                        node1GetNodeResponse, r'''$..name''')
-                                    .toString(),
-                                textAlign: TextAlign.center,
-                                style: FlutterFlowTheme.bodyText1.override(
-                                  fontFamily: 'Roboto',
-                                  fontSize: 30,
-                                ),
+                        Align(
+                          alignment: AlignmentDirectional(0, -1),
+                          child: Padding(
+                            padding:
+                                EdgeInsetsDirectional.fromSTEB(0, 20, 0, 0),
+                            child: Text(
+                              'Serial Number',
+                              style: FlutterFlowTheme.bodyText1.override(
+                                fontFamily: 'Poppins',
+                                fontSize: 20,
                               ),
                             ),
-                            Align(
-                              alignment: AlignmentDirectional(0, -1),
-                              child: Padding(
-                                padding:
-                                    EdgeInsetsDirectional.fromSTEB(0, 20, 0, 0),
-                                child: Text(
-                                  'Serial Number',
-                                  style: FlutterFlowTheme.bodyText1.override(
-                                    fontFamily: 'Poppins',
-                                    fontSize: 20,
-                                  ),
-                                ),
-                              ),
-                            )
-                          ],
-                        ),
-                      ),
-                      Padding(
-                        padding: EdgeInsetsDirectional.fromSTEB(40, 40, 40, 40),
-                        child: Icon(
-                          Icons.thumb_up,
-                          color: Color(0xFF006D18),
-                          size: 100,
-                        ),
-                      ),
-                      Align(
-                        alignment: AlignmentDirectional(-0.85, 0),
-                        child: Padding(
-                          padding: EdgeInsetsDirectional.fromSTEB(0, 20, 0, 0),
-                          child: Text(
-                            'Uptime',
-                            style: FlutterFlowTheme.bodyText1.override(
-                              fontFamily: 'Poppins',
-                              fontSize: 17,
-                            ),
                           ),
+                        )
+                      ],
+                    ),
+                  ),
+                  Padding(
+                    padding: EdgeInsetsDirectional.fromSTEB(40, 40, 40, 40),
+                    child: Icon(
+                      Icons.thumb_up,
+                      color: Color(0xFF006D18),
+                      size: 100,
+                    ),
+                  ),
+                  Align(
+                    alignment: AlignmentDirectional(-0.85, 0),
+                    child: Padding(
+                      padding: EdgeInsetsDirectional.fromSTEB(0, 20, 0, 0),
+                      child: Text(
+                        'Uptime',
+                        style: FlutterFlowTheme.bodyText1.override(
+                          fontFamily: 'Poppins',
+                          fontSize: 17,
                         ),
                       ),
-                      Align(
-                        alignment: AlignmentDirectional(-0.85, 0),
-                        child: Padding(
-                          padding: EdgeInsetsDirectional.fromSTEB(0, 20, 0, 0),
-                          child: Text(
-                            'Management IP',
-                            style: FlutterFlowTheme.bodyText1.override(
-                              fontFamily: 'Poppins',
-                              fontSize: 17,
-                            ),
-                          ),
+                    ),
+                  ),
+                  Align(
+                    alignment: AlignmentDirectional(-0.85, 0),
+                    child: Padding(
+                      padding: EdgeInsetsDirectional.fromSTEB(0, 20, 0, 0),
+                      child: Text(
+                        'Management IP',
+                        style: FlutterFlowTheme.bodyText1.override(
+                          fontFamily: 'Poppins',
+                          fontSize: 17,
                         ),
                       ),
-                      Align(
-                        alignment: AlignmentDirectional(-0.85, 0),
-                        child: Padding(
-                          padding: EdgeInsetsDirectional.fromSTEB(0, 20, 0, 0),
-                          child: Text(
-                            'Service Proccessor IP',
-                            style: FlutterFlowTheme.bodyText1.override(
-                              fontFamily: 'Poppins',
-                              fontSize: 17,
-                            ),
-                          ),
+                    ),
+                  ),
+                  Align(
+                    alignment: AlignmentDirectional(-0.85, 0),
+                    child: Padding(
+                      padding: EdgeInsetsDirectional.fromSTEB(0, 20, 0, 0),
+                      child: Text(
+                        'Service Proccessor IP',
+                        style: FlutterFlowTheme.bodyText1.override(
+                          fontFamily: 'Poppins',
+                          fontSize: 17,
                         ),
                       ),
-                      Align(
-                        alignment: AlignmentDirectional(-0.85, 0),
-                        child: Padding(
-                          padding: EdgeInsetsDirectional.fromSTEB(0, 20, 0, 0),
-                          child: Text(
-                            'System ID',
-                            style: FlutterFlowTheme.bodyText1.override(
-                              fontFamily: 'Poppins',
-                              fontSize: 17,
-                            ),
-                          ),
+                    ),
+                  ),
+                  Align(
+                    alignment: AlignmentDirectional(-0.85, 0),
+                    child: Padding(
+                      padding: EdgeInsetsDirectional.fromSTEB(0, 20, 0, 0),
+                      child: Text(
+                        'System ID',
+                        style: FlutterFlowTheme.bodyText1.override(
+                          fontFamily: 'Poppins',
+                          fontSize: 17,
                         ),
-                      )
-                    ],
-                  );
-                },
+                      ),
+                    ),
+                  )
+                ],
               ),
             ),
           ),
