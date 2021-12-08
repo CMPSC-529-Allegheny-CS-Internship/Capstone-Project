@@ -14,8 +14,6 @@ class LoginPageWidget extends StatefulWidget {
 }
 
 class _LoginPageWidgetState extends State<LoginPageWidget> {
-  bool _loadingButton1 = false;
-  bool _loadingButton2 = false;
   final scaffoldKey = GlobalKey<ScaffoldState>();
 
   @override
@@ -55,22 +53,17 @@ class _LoginPageWidgetState extends State<LoginPageWidget> {
                                 EdgeInsetsDirectional.fromSTEB(125, 50, 0, 0),
                             child: FFButtonWidget(
                               onPressed: () async {
-                                setState(() => _loadingButton1 = true);
-                                try {
-                                  await Navigator.push(
-                                    context,
-                                    MaterialPageRoute(
-                                      builder: (context) =>
-                                          RegisterAccountWidget(),
-                                    ),
-                                  );
-                                } finally {
-                                  setState(() => _loadingButton1 = false);
-                                }
+                                await Navigator.push(
+                                  context,
+                                  MaterialPageRoute(
+                                    builder: (context) =>
+                                        RegisterAccountWidget(),
+                                  ),
+                                );
                               },
                               text: 'Register ',
                               options: FFButtonOptions(
-                                width: 130,
+                                width: 140,
                                 height: 40,
                                 color: Color(0xFF00004B),
                                 textStyle: FlutterFlowTheme.subtitle2.override(
@@ -83,7 +76,6 @@ class _LoginPageWidgetState extends State<LoginPageWidget> {
                                 ),
                                 borderRadius: 12,
                               ),
-                              loading: _loadingButton1,
                             ),
                           ),
                         ),
@@ -92,21 +84,16 @@ class _LoginPageWidgetState extends State<LoginPageWidget> {
                               EdgeInsetsDirectional.fromSTEB(125, 30, 0, 0),
                           child: FFButtonWidget(
                             onPressed: () async {
-                              setState(() => _loadingButton2 = true);
-                              try {
-                                await Navigator.push(
-                                  context,
-                                  MaterialPageRoute(
-                                    builder: (context) => LoginAccountWidget(),
-                                  ),
-                                );
-                              } finally {
-                                setState(() => _loadingButton2 = false);
-                              }
+                              await Navigator.push(
+                                context,
+                                MaterialPageRoute(
+                                  builder: (context) => LoginAccountWidget(),
+                                ),
+                              );
                             },
                             text: 'Log in',
                             options: FFButtonOptions(
-                              width: 130,
+                              width: 140,
                               height: 40,
                               color: Color(0xFF00004B),
                               textStyle: FlutterFlowTheme.subtitle2.override(
@@ -119,7 +106,6 @@ class _LoginPageWidgetState extends State<LoginPageWidget> {
                               ),
                               borderRadius: 12,
                             ),
-                            loading: _loadingButton2,
                           ),
                         )
                       ],

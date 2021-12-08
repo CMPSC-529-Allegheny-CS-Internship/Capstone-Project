@@ -18,9 +18,6 @@ class _LoginAccountWidgetState extends State<LoginAccountWidget> {
   TextEditingController emailAddressLoginController;
   TextEditingController passwordLoginController;
   bool passwordLoginVisibility;
-  bool _loadingButton1 = false;
-  bool _loadingButton2 = false;
-  bool _loadingButton3 = false;
   final scaffoldKey = GlobalKey<ScaffoldState>();
 
   @override
@@ -35,6 +32,23 @@ class _LoginAccountWidgetState extends State<LoginAccountWidget> {
   Widget build(BuildContext context) {
     return Scaffold(
       key: scaffoldKey,
+      appBar: AppBar(
+        backgroundColor: FlutterFlowTheme.primaryColor,
+        automaticallyImplyLeading: true,
+        leading: InkWell(
+          onTap: () async {
+            Navigator.pop(context);
+          },
+          child: Icon(
+            Icons.arrow_back,
+            color: FlutterFlowTheme.tertiaryColor,
+            size: 30,
+          ),
+        ),
+        actions: [],
+        centerTitle: true,
+        elevation: 4,
+      ),
       backgroundColor: Color(0xFF262D34),
       body: Container(
         width: MediaQuery.of(context).size.width,
@@ -56,13 +70,13 @@ class _LoginAccountWidgetState extends State<LoginAccountWidget> {
             crossAxisAlignment: CrossAxisAlignment.center,
             children: [
               Padding(
-                padding: EdgeInsetsDirectional.fromSTEB(0, 70, 0, 0),
+                padding: EdgeInsetsDirectional.fromSTEB(0, 30, 0, 0),
                 child: Row(
                   mainAxisSize: MainAxisSize.max,
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: [
                     Image.asset(
-                      'assets/images/na_logo_black_rgb_reg-mark_tcm19-21014.webp',
+                      'assets/images/netapp-logo-w.png',
                       width: 240,
                       height: 60,
                       fit: BoxFit.cover,
@@ -235,25 +249,20 @@ class _LoginAccountWidgetState extends State<LoginAccountWidget> {
                         children: [
                           FFButtonWidget(
                             onPressed: () async {
-                              setState(() => _loadingButton1 = true);
-                              try {
-                                if (emailAddressLoginController.text.isEmpty) {
-                                  ScaffoldMessenger.of(context).showSnackBar(
-                                    SnackBar(
-                                      content: Text(
-                                        'Email required!',
-                                      ),
+                              if (emailAddressLoginController.text.isEmpty) {
+                                ScaffoldMessenger.of(context).showSnackBar(
+                                  SnackBar(
+                                    content: Text(
+                                      'Email required!',
                                     ),
-                                  );
-                                  return;
-                                }
-                                await resetPassword(
-                                  email: emailAddressLoginController.text,
-                                  context: context,
+                                  ),
                                 );
-                              } finally {
-                                setState(() => _loadingButton1 = false);
+                                return;
                               }
+                              await resetPassword(
+                                email: emailAddressLoginController.text,
+                                context: context,
+                              );
                             },
                             text: 'Forgot Password?',
                             options: FFButtonOptions(
@@ -273,30 +282,24 @@ class _LoginAccountWidgetState extends State<LoginAccountWidget> {
                               ),
                               borderRadius: 12,
                             ),
-                            loading: _loadingButton1,
                           ),
                           FFButtonWidget(
                             onPressed: () async {
-                              setState(() => _loadingButton2 = true);
-                              try {
-                                final user = await signInWithEmail(
-                                  context,
-                                  emailAddressLoginController.text,
-                                  passwordLoginController.text,
-                                );
-                                if (user == null) {
-                                  return;
-                                }
-
-                                await Navigator.push(
-                                  context,
-                                  MaterialPageRoute(
-                                    builder: (context) => HomePageWidget(),
-                                  ),
-                                );
-                              } finally {
-                                setState(() => _loadingButton2 = false);
+                              final user = await signInWithEmail(
+                                context,
+                                emailAddressLoginController.text,
+                                passwordLoginController.text,
+                              );
+                              if (user == null) {
+                                return;
                               }
+
+                              await Navigator.push(
+                                context,
+                                MaterialPageRoute(
+                                  builder: (context) => HomePageWidget(),
+                                ),
+                              );
                             },
                             text: 'Login',
                             options: FFButtonOptions(
@@ -315,7 +318,6 @@ class _LoginAccountWidgetState extends State<LoginAccountWidget> {
                               ),
                               borderRadius: 12,
                             ),
-                            loading: _loadingButton2,
                           )
                         ],
                       ),
@@ -331,17 +333,12 @@ class _LoginAccountWidgetState extends State<LoginAccountWidget> {
                       padding: EdgeInsetsDirectional.fromSTEB(0, 8, 0, 0),
                       child: FFButtonWidget(
                         onPressed: () async {
-                          setState(() => _loadingButton3 = true);
-                          try {
-                            await Navigator.push(
-                              context,
-                              MaterialPageRoute(
-                                builder: (context) => RegisterAccountWidget(),
-                              ),
-                            );
-                          } finally {
-                            setState(() => _loadingButton3 = false);
-                          }
+                          await Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                              builder: (context) => RegisterAccountWidget(),
+                            ),
+                          );
                         },
                         text: 'Create Account',
                         options: FFButtonOptions(
@@ -361,7 +358,6 @@ class _LoginAccountWidgetState extends State<LoginAccountWidget> {
                           ),
                           borderRadius: 12,
                         ),
-                        loading: _loadingButton3,
                       ),
                     )
                   ],

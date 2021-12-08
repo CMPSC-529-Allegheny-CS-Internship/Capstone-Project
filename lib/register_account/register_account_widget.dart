@@ -19,7 +19,6 @@ class _RegisterAccountWidgetState extends State<RegisterAccountWidget> {
   bool passwordVisibility;
   TextEditingController passwordConfirmController;
   bool passwordConfirmVisibility;
-  bool _loadingButton = false;
   final scaffoldKey = GlobalKey<ScaffoldState>();
 
   @override
@@ -36,6 +35,23 @@ class _RegisterAccountWidgetState extends State<RegisterAccountWidget> {
   Widget build(BuildContext context) {
     return Scaffold(
       key: scaffoldKey,
+      appBar: AppBar(
+        backgroundColor: FlutterFlowTheme.primaryColor,
+        automaticallyImplyLeading: true,
+        leading: InkWell(
+          onTap: () async {
+            Navigator.pop(context);
+          },
+          child: Icon(
+            Icons.arrow_back,
+            color: FlutterFlowTheme.tertiaryColor,
+            size: 30,
+          ),
+        ),
+        actions: [],
+        centerTitle: true,
+        elevation: 4,
+      ),
       backgroundColor: Color(0xFF262D34),
       body: Stack(
         children: [
@@ -59,13 +75,13 @@ class _RegisterAccountWidgetState extends State<RegisterAccountWidget> {
                 crossAxisAlignment: CrossAxisAlignment.center,
                 children: [
                   Padding(
-                    padding: EdgeInsetsDirectional.fromSTEB(0, 70, 0, 0),
+                    padding: EdgeInsetsDirectional.fromSTEB(0, 30, 0, 0),
                     child: Row(
                       mainAxisSize: MainAxisSize.max,
                       mainAxisAlignment: MainAxisAlignment.center,
                       children: [
                         Image.asset(
-                          'assets/images/na_logo_black_rgb_reg-mark_tcm19-21014.webp',
+                          'assets/images/netapp-logo-w.png',
                           width: 240,
                           height: 60,
                           fit: BoxFit.cover,
@@ -326,41 +342,36 @@ class _RegisterAccountWidgetState extends State<RegisterAccountWidget> {
                           color: Color(0xFFDBE2E7),
                         ),
                         Align(
-                          alignment: AlignmentDirectional(0, 0.05),
+                          alignment: AlignmentDirectional(0, -0.25),
                           child: FFButtonWidget(
                             onPressed: () async {
-                              setState(() => _loadingButton = true);
-                              try {
-                                if (passwordController.text !=
-                                    passwordConfirmController.text) {
-                                  ScaffoldMessenger.of(context).showSnackBar(
-                                    SnackBar(
-                                      content: Text(
-                                        "Passwords don't match!",
-                                      ),
+                              if (passwordController.text !=
+                                  passwordConfirmController.text) {
+                                ScaffoldMessenger.of(context).showSnackBar(
+                                  SnackBar(
+                                    content: Text(
+                                      "Passwords don't match!",
                                     ),
-                                  );
-                                  return;
-                                }
-
-                                final user = await createAccountWithEmail(
-                                  context,
-                                  emailAddressController.text,
-                                  passwordController.text,
-                                );
-                                if (user == null) {
-                                  return;
-                                }
-
-                                await Navigator.push(
-                                  context,
-                                  MaterialPageRoute(
-                                    builder: (context) => HomePageWidget(),
                                   ),
                                 );
-                              } finally {
-                                setState(() => _loadingButton = false);
+                                return;
                               }
+
+                              final user = await createAccountWithEmail(
+                                context,
+                                emailAddressController.text,
+                                passwordController.text,
+                              );
+                              if (user == null) {
+                                return;
+                              }
+
+                              await Navigator.push(
+                                context,
+                                MaterialPageRoute(
+                                  builder: (context) => HomePageWidget(),
+                                ),
+                              );
                             },
                             text: 'Create Account',
                             options: FFButtonOptions(
@@ -379,7 +390,6 @@ class _RegisterAccountWidgetState extends State<RegisterAccountWidget> {
                               ),
                               borderRadius: 12,
                             ),
-                            loading: _loadingButton,
                           ),
                         )
                       ],

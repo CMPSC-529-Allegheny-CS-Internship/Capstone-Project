@@ -1,5 +1,4 @@
 import '../backend/api_requests/api_calls.dart';
-import '../cluster_page2/cluster_page2_widget.dart';
 import '../flutter_flow/flutter_flow_theme.dart';
 import '../flutter_flow/flutter_flow_util.dart';
 import '../flutter_flow/flutter_flow_widgets.dart';
@@ -8,8 +7,8 @@ import '../node1/node1_widget.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 
-class ClusterPageWidget extends StatefulWidget {
-  const ClusterPageWidget({
+class ClusterPage2Widget extends StatefulWidget {
+  const ClusterPage2Widget({
     Key key,
     this.name,
     this.version,
@@ -23,10 +22,10 @@ class ClusterPageWidget extends StatefulWidget {
   final String dateAndTime;
 
   @override
-  _ClusterPageWidgetState createState() => _ClusterPageWidgetState();
+  _ClusterPage2WidgetState createState() => _ClusterPage2WidgetState();
 }
 
-class _ClusterPageWidgetState extends State<ClusterPageWidget> {
+class _ClusterPage2WidgetState extends State<ClusterPage2Widget> {
   final scaffoldKey = GlobalKey<ScaffoldState>();
 
   @override
@@ -46,7 +45,7 @@ class _ClusterPageWidgetState extends State<ClusterPageWidget> {
             ),
           );
         }
-        final clusterPageGetClusterResponse = snapshot.data;
+        final clusterPage2GetClusterResponse = snapshot.data;
         return Scaffold(
           key: scaffoldKey,
           appBar: PreferredSize(
@@ -308,7 +307,7 @@ class _ClusterPageWidgetState extends State<ClusterPageWidget> {
                                             r'''$.nodes''')
                                         ?.toList() ??
                                     [])
-                                .take(4)
+                                .take(8)
                                 .toList();
                             return ListView.builder(
                               padding: EdgeInsets.zero,
@@ -414,67 +413,10 @@ class _ClusterPageWidgetState extends State<ClusterPageWidget> {
                       },
                     ),
                   ),
-                  Padding(
-                    padding: EdgeInsetsDirectional.fromSTEB(0, 0, 0, 50),
-                    child: Container(
-                      width: 150,
-                      height: 40,
-                      decoration: BoxDecoration(),
-                      child: FFButtonWidget(
-                        onPressed: () async {
-                          await showDialog(
-                            context: context,
-                            builder: (alertDialogContext) {
-                              return AlertDialog(
-                                title: Text('Warning'),
-                                content: Text(
-                                    'You will be adding 4 nodes. Are you sure?'),
-                                actions: [
-                                  TextButton(
-                                    onPressed: () =>
-                                        Navigator.pop(alertDialogContext),
-                                    child: Text('Cancel'),
-                                  ),
-                                  TextButton(
-                                    onPressed: () async {
-                                      Navigator.pop(alertDialogContext);
-                                      await Navigator.pushAndRemoveUntil(
-                                        context,
-                                        PageTransition(
-                                          type: PageTransitionType.fade,
-                                          duration: Duration(milliseconds: 0),
-                                          reverseDuration:
-                                              Duration(milliseconds: 0),
-                                          child: ClusterPage2Widget(),
-                                        ),
-                                        (r) => false,
-                                      );
-                                      ;
-                                    },
-                                    child: Text('Confirm'),
-                                  ),
-                                ],
-                              );
-                            },
-                          );
-                        },
-                        text: 'Add Nodes',
-                        options: FFButtonOptions(
-                          width: 130,
-                          height: 20,
-                          color: Color(0xA78D0808),
-                          textStyle: FlutterFlowTheme.subtitle2.override(
-                            fontFamily: 'Poppins',
-                            color: Colors.white,
-                          ),
-                          borderSide: BorderSide(
-                            color: Colors.transparent,
-                            width: 1,
-                          ),
-                          borderRadius: 12,
-                        ),
-                      ),
-                    ),
+                  Container(
+                    width: 200,
+                    height: 100,
+                    decoration: BoxDecoration(),
                   )
                 ],
               ),
